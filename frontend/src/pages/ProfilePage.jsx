@@ -42,17 +42,20 @@ const ProfilePage = () => {
   }, [user, reset]);
 
   const onProfileSubmit = async (data) => {
-    setLoading(true);
-    try {
-      await api.patch('accounts/profile/', data);
-      dispatch(fetchProfile());
-      toast.success('Profile updated successfully!');
-    } catch (err) {
-      toast.error('Failed to update profile');
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  try
+  {
+    // Only send text fields not avatar
+    const { avatar, avatar_url, ...textData } = data;
+    await api.patch('accounts/profile/', textData);
+    dispatch(fetchProfile());
+    toast.success('Profile updated successfully!');
+  } catch (err) {
+    toast.error('Failed to update profile');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const onPasswordSubmit = async (data) => {
   if (data.new_password !== data.confirm_password) {

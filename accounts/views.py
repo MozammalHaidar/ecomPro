@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAdminUser
 from .serializers import RegisterSerializer, UserSerializer
+from rest_framework import generics, status, parsers
 
 User = get_user_model()
 
@@ -63,13 +64,39 @@ class LogoutView(APIView):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# class ProfileView(generics.RetrieveUpdateAPIView):
+#     serializer_class = UserSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_object(self):
+#         return self.request.user
 class ProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
 
     def get_object(self):
         return self.request.user
-    
+
+    def patch(self, request, *args, **kwargs):
+        user = self.get_object()
+        
+        # Remove avatar from data if it's a string URL not a file
+        data = request.data.copy() if hasattr(request.data, 'copy') else dict(request.data)
+        
+        if 'avatar' in data and not hasattr(data['avatar'], 'read'):
+            del data['avatar']
+
+        serializer = UserSerializer(
+            user,
+            data=data,
+            partial=True,
+            context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 User = get_user_model()

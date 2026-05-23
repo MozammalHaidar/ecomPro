@@ -10,18 +10,27 @@ const Avatar = ({ user, size = 'md', className = '' }) => {
 
   const initial = user?.first_name?.charAt(0).toUpperCase() || 'U';
 
-  const avatarUrl = user?.avatar
-    ? user.avatar.startsWith('http')
-      ? user.avatar
-      : `http://127.0.0.1:8000${user.avatar}`
-    : null;
+  // Handle all possible avatar URL formats
+  const getAvatarUrl = () => {
+    const url = user?.avatar_url || user?.avatar;
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    if (url.startsWith('/media')) return `http://127.0.0.1:8000${url}`;
+    return url;
+  };
+
+  const avatarUrl = getAvatarUrl();
 
   if (avatarUrl) {
     return (
       <img
         src={avatarUrl}
-        alt={user?.first_name}
+        alt={user?.first_name || 'User'}
         className={`${sizes[size]} rounded-full object-cover flex-shrink-0 ${className}`}
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.nextSibling.style.display = 'flex';
+        }}
       />
     );
   }
