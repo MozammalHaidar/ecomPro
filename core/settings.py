@@ -158,3 +158,13 @@ cloudinary.config(
     api_secret=config('CLOUDINARY_API_SECRET'),
     secure=True
 )
+
+# CSRF Settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://ecompro-1-klfc.onrender.com',
+    'http://localhost:5173',
+    'http://localhost:3000',
+]
+
+# Security settings for production
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
