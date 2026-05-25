@@ -38,10 +38,23 @@ from django.conf.urls.static import static
 from django.http import JsonResponse
 import cloudinary
 
+# def test_cloudinary(request):
+#     try:
+#         result = cloudinary.api.ping()
+#         return JsonResponse({'status': 'connected', 'result': result})
+#     except Exception as e:
+#         return JsonResponse({'status': 'error', 'message': str(e)})
+
 def test_cloudinary(request):
     try:
         result = cloudinary.api.ping()
-        return JsonResponse({'status': 'connected', 'result': result})
+        import django.conf
+        storage = django.conf.settings.DEFAULT_FILE_STORAGE
+        return JsonResponse({
+            'status': 'connected',
+            'storage': storage,
+            'cloud_name': django.conf.settings.CLOUDINARY_STORAGE
+        })
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
