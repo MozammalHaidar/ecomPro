@@ -143,10 +143,16 @@ SIMPLE_JWT = {
 }
 
 # CORS
-CORS_ALLOWED_ORIGINS = config(
-    'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:5173,http://localhost:3000'
-).split(',')
+# CORS_ALLOWED_ORIGINS = config(
+#     'CORS_ALLOWED_ORIGINS',
+#     default='http://localhost:5173,http://localhost:3000'
+# ).split(',')
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://ecom-pro-psi.vercel.app',
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -160,10 +166,16 @@ cloudinary.config(
 )
 
 # CSRF Settings
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://ecompro-1-klfc.onrender.com',
+#     'http://localhost:5173',
+#     'http://localhost:3000',
+# ]
+
 CSRF_TRUSTED_ORIGINS = [
     'https://ecompro-1-klfc.onrender.com',
+    'https://ecom-pro-psi.vercel.app',
     'http://localhost:5173',
-    'http://localhost:3000',
 ]
 
 # Security settings for production
