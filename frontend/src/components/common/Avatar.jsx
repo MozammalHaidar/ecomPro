@@ -10,12 +10,15 @@ const Avatar = ({ user, size = 'md', className = '' }) => {
 
   const initial = user?.first_name?.charAt(0).toUpperCase() || 'U';
 
-  // Handle all possible avatar URL formats
   const getAvatarUrl = () => {
     const url = user?.avatar_url || user?.avatar;
     if (!url) return null;
+    // Cloudinary URL — use directly
+    if (url.startsWith('https://res.cloudinary.com')) return url;
+    // Full URL — use directly
     if (url.startsWith('http')) return url;
-    if (url.startsWith('/media')) return `http://127.0.0.1:8000${url}`;
+    // Local path — prepend backend URL
+    if (url.startsWith('/media')) return `${import.meta.env.VITE_API_URL?.replace('/api/', '')}${url}`;
     return url;
   };
 
@@ -29,7 +32,6 @@ const Avatar = ({ user, size = 'md', className = '' }) => {
         className={`${sizes[size]} rounded-full object-cover flex-shrink-0 ${className}`}
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.nextSibling.style.display = 'flex';
         }}
       />
     );
