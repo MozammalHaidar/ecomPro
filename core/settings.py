@@ -2,6 +2,10 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -166,11 +170,6 @@ cloudinary.config(
 )
 
 # CSRF Settings
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://ecompro-1-klfc.onrender.com',
-#     'http://localhost:5173',
-#     'http://localhost:3000',
-# ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://ecompro-1-klfc.onrender.com',
@@ -180,3 +179,20 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Security settings for production
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+# Cloudinary config
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET'),
+    secure=True
+)
