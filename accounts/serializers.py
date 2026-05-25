@@ -23,6 +23,26 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+# class UserSerializer(serializers.ModelSerializer):
+#     avatar_url = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = User
+#         fields = [
+#             'id', 'email', 'first_name', 'last_name',
+#             'phone', 'address', 'avatar', 'avatar_url',
+#             'is_admin', 'is_staff'
+#         ]
+#         read_only_fields = ['id', 'email', 'is_admin', 'is_staff']
+#         extra_kwargs = {
+#             'avatar': {'required': False}
+#         }
+
+#     def get_avatar_url(self, obj):
+#         if obj.avatar:
+#             return obj.avatar.url
+#         return None
+
 class UserSerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
 
@@ -40,5 +60,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_avatar_url(self, obj):
         if obj.avatar:
-            return obj.avatar.url
+            try:
+                return obj.avatar.url
+            except Exception:
+                return str(obj.avatar)
         return None
