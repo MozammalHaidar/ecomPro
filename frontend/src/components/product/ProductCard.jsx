@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { addToCart } from '../../store/slices/cartSlice';
 import { toggleWishlist } from '../../store/slices/wishlistSlice';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -46,13 +47,7 @@ const ProductCard = ({ product }) => {
       <Link to={`/products/${product.slug}`}>
         <div className="relative">
           <img
-            src={
-              product.image
-                ? product.image.startsWith('http')
-                  ? product.image
-                  : `http://127.0.0.1:8000${product.image}`
-                : '/placeholder.png'
-            }
+            src={getImageUrl(product.image)}
             alt={product.name}
             className="w-full h-52 object-contain p-3 bg-gray-50"
           />

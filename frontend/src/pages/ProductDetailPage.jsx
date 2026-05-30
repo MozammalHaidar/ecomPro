@@ -15,6 +15,7 @@ import {
   FiTruck, FiShield, FiRefreshCw
 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiZoomIn, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ImageGallery = ({ mainImage, images, productName }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -12,26 +13,23 @@ const ImageGallery = ({ mainImage, images, productName }) => {
 
   // Add main image first if exists
   if (mainImage) {
-    allImages.push({
-      id: 'main',
-      image: mainImage,
-      alt_text: productName,
-    });
-  }
+  allImages.push({
+    id: 'main',
+    image: getImageUrl(mainImage),
+    alt_text: productName,
+  });
+}
 
-  // Add gallery images
-  if (images && images.length > 0) {
-    images.forEach((img) => {
-      const imageUrl = img.image?.startsWith('http')
-        ? img.image
-        : `http://127.0.0.1:8000${img.image}`;
-      allImages.push({
-        id: img.id,
-        image: imageUrl,
-        alt_text: img.alt_text || productName,
-      });
+// Add gallery images
+if (images && images.length > 0) {
+  images.forEach((img) => {
+    allImages.push({
+      id: img.id,
+      image: getImageUrl(img.image),
+      alt_text: img.alt_text || productName,
     });
-  }
+  });
+}
 
   const currentImage = selectedImage || allImages[0];
 
