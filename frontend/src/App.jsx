@@ -24,6 +24,7 @@ import AdminSalesChart from './pages/admin/AdminSalesChart';
 import AdminCoupons from './pages/admin/AdminCoupons';
 import AdminLayout from './components/layout/AdminLayout';
 import AdminTestimonials from './pages/admin/AdminTestimonials';
+import AdminCategories from './pages/admin/AdminCategories';
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function App() {
             <Route path="admin/charts" element={<AdminSalesChart />} />
             <Route path="admin/coupons" element={<AdminCoupons />} />
             <Route path="admin/testimonials" element={<AdminTestimonials />} />
+            <Route path="admin/categories" element={<AdminCategories />} />
           </Route>
         </Route>
       </Route>

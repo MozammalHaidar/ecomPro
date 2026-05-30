@@ -13,6 +13,7 @@ import Avatar from '../common/Avatar';
 const menuItems = [
   { path: '/admin',               label: 'Dashboard',    icon: <FiGrid size={18} />,        exact: true },
   { path: '/admin/products',      label: 'Products',     icon: <FiShoppingBag size={18} />, exact: false },
+  { path: '/admin/categories',    label: 'Categories',   icon: <FiGrid size={18} />,        exact: false },
   { path: '/admin/orders',        label: 'Orders',       icon: <FiPackage size={18} />,     exact: false },
   { path: '/admin/users',         label: 'Users',        icon: <FiUsers size={18} />,       exact: false },
   { path: '/admin/charts',        label: 'Analytics',    icon: <FiTrendingUp size={18} />,  exact: false },
