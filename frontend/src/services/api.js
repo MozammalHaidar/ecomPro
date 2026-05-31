@@ -1,12 +1,5 @@
 import axios from 'axios';
 
-// const api = axios.create({
-//   baseURL: 'http://127.0.0.1:8000/api/',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// });
-
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/',
   headers: {
@@ -35,15 +28,17 @@ api.interceptors.response.use(
       original._retry = true;
       try {
         const refresh = localStorage.getItem('refresh_token');
+        if (!refresh) return Promise.reject(error);
+        
+        const baseURL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/';
         const { data } = await axios.post(
-          'http://127.0.0.1:8000/api/accounts/token/refresh/',
+          `${baseURL}accounts/token/refresh/`,
           { refresh }
         );
         localStorage.setItem('access_token', data.access);
         original.headers.Authorization = `Bearer ${data.access}`;
         return api(original);
       } catch (err) {
-  // Only redirect if refresh token is also expired
         const isRefreshEndpoint = original.url?.includes('token/refresh');
         if (isRefreshEndpoint) {
           localStorage.removeItem('access_token');
