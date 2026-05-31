@@ -9,6 +9,7 @@ import { clearCart } from '../store/slices/cartSlice';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 import { FiMapPin, FiUser, FiPhone, FiMail } from 'react-icons/fi';
+import { getImageUrl } from '../utils/imageUrl';
 
 const schema = yup.object({
   full_name: yup.string().required('Full name is required'),
@@ -221,7 +222,7 @@ const CheckoutPage = () => {
     {items.map((item) => (
       <div key={item.id} className="flex gap-3 items-center">
         <img
-          src={item.image ? item.image : '/placeholder.png'}
+          src={getImageUrl(item.image)}
           alt={item.name}
           className="w-12 h-12 object-cover rounded-lg"
         />

@@ -6,6 +6,7 @@ import { FiPackage, FiArrowRight, FiClock, FiCheck, FiTruck, FiX } from 'react-i
 import { useState } from 'react';
 import api from '../services/api';
 import { OrderCardSkeleton } from '../components/common/Skeleton';
+import { getImageUrl } from '../utils/imageUrl';
 
 const statusConfig = {
   pending:    { color: 'bg-yellow-100 text-yellow-700', icon: <FiClock size={14} /> },
@@ -96,13 +97,13 @@ const OrdersPage = () => {
               {/* Items preview */}
               <div className="flex gap-2 flex-wrap">
                 {order.items?.slice(0, 4).map((item) => (
-                  <img
+                 <img
                     key={item.id}
-                    src={item.image ? `http://127.0.0.1:8000/media/${item.image}` : '/placeholder.png'}
+                    src={getImageUrl(item.image)}
                     alt={item.name}
                     className="w-12 h-12 object-cover rounded-lg border"
                   />
-                ))}
+                                  ))}
                 {order.items?.length > 4 && (
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-xs text-gray-500 font-medium">
                     +{order.items.length - 4}

@@ -5,6 +5,7 @@ import { FiArrowLeft, FiPackage, FiClock, FiCheck, FiTruck, FiX, FiMapPin } from
 import Spinner from '../components/common/Spinner';
 import api from '../services/api';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imageUrl';
 
 const statusConfig = {
   pending:    { color: 'bg-yellow-100 text-yellow-700', icon: <FiClock /> },
@@ -157,7 +158,7 @@ const OrderDetailPage = () => {
               className="flex gap-4 items-center py-3 border-b last:border-0"
             >
               <img
-                src={item.image ? `http://127.0.0.1:8000/media/${item.image}` : '/placeholder.png'}
+                src={getImageUrl(item.image)}
                 alt={item.name}
                 className="w-16 h-16 object-cover rounded-lg"
               />

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { removeFromCart, updateQuantity, clearCart } from '../store/slices/cartSlice';
 import { FiTrash2, FiShoppingBag, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const CartPage = () => {
               >
                 {/* Image */}
                 <img
-                  src={item.image ? item.image : '/placeholder.png'}
+                  src={getImageUrl(item.image)}
                   alt={item.name}
                   className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
                 />

@@ -7,6 +7,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { FiHeart, FiShoppingCart, FiArrowLeft, FiTrash2 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Spinner from '../components/common/Spinner';
+import { getImageUrl } from '../utils/imageUrl';
 
 const WishlistPage = () => {
   const dispatch = useDispatch();
@@ -66,13 +67,7 @@ const WishlistPage = () => {
                 {/* Image */}
                 <Link to={`/products/${item.product.slug}`}>
                   <img
-                    src={
-                      item.product.image
-                        ? item.product.image.startsWith('http')
-                          ? item.product.image
-                          : `http://127.0.0.1:8000${item.product.image}`
-                        : '/placeholder.png'
-                    }
+                    src={getImageUrl(item.product.image)}
                     alt={item.product.name}
                     className="w-24 h-24 object-contain rounded-lg bg-gray-50 p-2 flex-shrink-0"
                   />
