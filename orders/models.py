@@ -4,7 +4,6 @@ from products.models import Product
 
 User = get_user_model()
 
-
 class Order(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
