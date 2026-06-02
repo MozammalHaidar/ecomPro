@@ -58,11 +58,11 @@ const ProductCard = ({ product }) => {
               Sale
             </span>
           )}
-          {/* {product.featured && (
+          {product.featured && (
             <span className="absolute top-2 left-2 bg-primary-600 text-white text-xs px-2 py-1 rounded-full">
               Featured
             </span>
-          )} */}
+          )}
 
           {/* Wishlist Button */}
           <button
