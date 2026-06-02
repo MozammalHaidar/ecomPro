@@ -35,7 +35,7 @@ class AdminTestimonialListView(generics.ListAPIView):
     permission_classes = [IsAdminUser]
     queryset = Testimonial.objects.all()
 
-
+    
 class AdminTestimonialApproveView(APIView):
     permission_classes = [IsAdminUser]
 

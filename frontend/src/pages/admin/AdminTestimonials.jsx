@@ -25,19 +25,36 @@ const AdminTestimonials = () => {
     }
   };
 
+  // const handleApprove = async (id) => {
+  //   try {
+  //     const res = await api.patch(`testimonials/admin/${id}/approve/`);
+  //     setTestimonials((prev) =>
+  //       prev.map((t) =>
+  //         t.id === id ? { ...t, is_approved: res.data.is_approved } : t
+  //       )
+  //     );
+  //     toast.success(res.data.message);
+  //   } catch (err) {
+  //     toast.error('Failed to update testimonial');
+  //   }
+  // };
+  
   const handleApprove = async (id) => {
-    try {
-      const res = await api.patch(`testimonials/admin/${id}/approve/`);
-      setTestimonials((prev) =>
-        prev.map((t) =>
-          t.id === id ? { ...t, is_approved: res.data.is_approved } : t
-        )
-      );
-      toast.success(res.data.message);
-    } catch (err) {
-      toast.error('Failed to update testimonial');
-    }
-  };
+  try {
+    const res = await api.patch(`testimonials/admin/${id}/approve/`);
+    setTestimonials((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, is_approved: res.data.is_approved } : t
+      )
+    );
+    toast.success(res.data.message);
+    // Refresh list after approval
+    fetchTestimonials();
+  } catch (err) {
+    console.error(err);
+    toast.error(err.response?.data?.error || 'Failed to update testimonial');
+  }
+};
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this testimonial?')) return;
