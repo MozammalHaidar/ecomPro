@@ -25,10 +25,15 @@ import AdminCoupons from './pages/admin/AdminCoupons';
 import AdminLayout from './components/layout/AdminLayout';
 import AdminTestimonials from './pages/admin/AdminTestimonials';
 import AdminCategories from './pages/admin/AdminCategories';
+import { pingBackend } from './utils/keepAlive';
 
 function App() {
   const dispatch = useDispatch();
   const { access } = useSelector((state) => state.auth);
+
+useEffect(() => {
+    pingBackend(); // fires once silently on app load
+  }, []);
 
   useEffect(() => {
     if (access) {
