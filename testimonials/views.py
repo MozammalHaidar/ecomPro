@@ -53,23 +53,19 @@ class AdminTestimonialListView(generics.ListAPIView):
 #             'is_approved': testimonial.is_approved
 #         })
 
+from django.shortcuts import get_object_or_404
+
 class AdminTestimonialApproveView(APIView):
     permission_classes = [IsAdminUser]
 
     def patch(self, request, pk):
-        testimonial = Testimonial.objects.filter(pk=pk).first()
-
-        if not testimonial:
-            return Response(
-                {'error': 'Testimonial not found'},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        testimonial = get_object_or_404(Testimonial, pk=pk)
 
         testimonial.is_approved = True
         testimonial.save()
 
         return Response({
-            'message': 'Testimonial approved',
+            'message': 'Testimonial approved successfully',
             'is_approved': testimonial.is_approved
         })
 
