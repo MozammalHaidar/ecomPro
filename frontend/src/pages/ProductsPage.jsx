@@ -10,6 +10,7 @@ import {
   FiChevronLeft, FiChevronRight,
   FiGrid, FiList, FiSliders
 } from 'react-icons/fi';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -390,17 +391,13 @@ const ProductsPage = () => {
                       {viewMode === 'list' ? (
                         // List View
                         <div className="bg-white rounded-xl shadow-sm p-4 flex gap-4 items-center hover:shadow-md transition">
-                          <img
-                            src={
-                              product.image
-                                ? product.image.startsWith('http')
-                                  ? product.image
-                                  : `http://127.0.0.1:8000${product.image}`
-                                : '/placeholder.png'
-                            }
-                            alt={product.name}
-                            className="w-24 h-24 object-contain rounded-xl bg-gray-50 p-2 flex-shrink-0"
-                          />
+
+                            <img
+                              src={getImageUrl(product.image)}
+                              alt={product.name}
+                              loading="lazy"                    // 👈 add this
+                              className="w-24 h-24 object-contain rounded-xl bg-gray-50 p-2 flex-shrink-0"
+                            />
                           <div className="flex-1">
                             <p className="text-xs text-gray-400 mb-1">{product.category_name}</p>
                             <h3 className="font-semibold text-gray-800 mb-1">{product.name}</h3>
