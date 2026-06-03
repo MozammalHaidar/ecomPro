@@ -36,20 +36,40 @@ class AdminTestimonialListView(generics.ListAPIView):
     queryset = Testimonial.objects.all()
 
     
+# class AdminTestimonialApproveView(APIView):
+#     permission_classes = [IsAdminUser]
+
+#     def patch(self, request, pk):
+#         testimonial = Testimonial.objects.filter(pk=pk).first()
+#         if not testimonial:
+#             return Response(
+#                 {'error': 'Testimonial not found'},
+#                 status=status.HTTP_404_NOT_FOUND
+#             )
+#         testimonial.is_approved = not testimonial.is_approved
+#         testimonial.save()
+#         return Response({
+#             'message': f'Testimonial {"approved" if testimonial.is_approved else "unapproved"}',
+#             'is_approved': testimonial.is_approved
+#         })
+
 class AdminTestimonialApproveView(APIView):
     permission_classes = [IsAdminUser]
 
     def patch(self, request, pk):
         testimonial = Testimonial.objects.filter(pk=pk).first()
+
         if not testimonial:
             return Response(
                 {'error': 'Testimonial not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
-        testimonial.is_approved = not testimonial.is_approved
+
+        testimonial.is_approved = True
         testimonial.save()
+
         return Response({
-            'message': f'Testimonial {"approved" if testimonial.is_approved else "unapproved"}',
+            'message': 'Testimonial approved',
             'is_approved': testimonial.is_approved
         })
 
