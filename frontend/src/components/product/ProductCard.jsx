@@ -39,18 +39,19 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
-      className="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden"
-    >
+        <motion.div
+          whileHover={{ y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="group bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden"
+        >
       <Link to={`/products/${product.slug}`}>
-        <div className="relative">
-          <img
-            src={getImageUrl(product.image)}
-            alt={product.name}
-            className="w-full h-52 object-contain p-3 bg-gray-50"
-          />
+        <div className="relative w-full h-52 bg-gray-50 overflow-hidden">
+            <img
+              src={getImageUrl(product.image)}
+              alt={product.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
 
           {/* Badges */}
           {product.discount_price && (
