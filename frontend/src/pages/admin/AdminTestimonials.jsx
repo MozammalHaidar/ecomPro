@@ -39,20 +39,32 @@ const AdminTestimonials = () => {
   //   }
   // };
   
-  const handleApprove = async (id) => {
+ const handleApprove = async (id) => {
   try {
-    const res = await api.patch(`testimonials/admin/${id}/approve/`);
+    const res = await api.patch(
+      `testimonials/admin/${id}/approve/`
+    );
+
     setTestimonials((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, is_approved: res.data.is_approved } : t
+        t.id === id
+          ? { ...t, is_approved: res.data.is_approved }
+          : t
       )
     );
+
     toast.success(res.data.message);
-    // Refresh list after approval
+
+    // Refresh updated data
     fetchTestimonials();
+
   } catch (err) {
     console.error(err);
-    toast.error(err.response?.data?.error || 'Failed to update testimonial');
+
+    toast.error(
+      err.response?.data?.error ||
+      'Failed to approve testimonial'
+    );
   }
 };
 
@@ -185,14 +197,15 @@ const AdminTestimonials = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => handleApprove(t.id)}
+                  disabled={t.is_approved}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-medium transition ${
                     t.is_approved
-                      ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
                       : 'bg-green-50 text-green-600 hover:bg-green-100'
                   }`}
                 >
                   <FiCheck size={14} />
-                  {t.is_approved ? 'Unapprove' : 'Approve'}
+                  {t.is_approved ? 'Approved' : 'Approve'}
                 </button>
                 <button
                   onClick={() => handleDelete(t.id)}
