@@ -32,7 +32,7 @@
 // };
 
 // Cloudinary optimization params — change w_200 if you need a different size
-const CL_OPT = 'f_auto,q_auto,w_200';
+const CL_OPT = 'f_auto,q_auto,w_400,h_400,c_pad,b_white';
 const CL_BASE = `https://res.cloudinary.com/ddiouxm0f/image/upload/${CL_OPT}`;
 
 export const getImageUrl = (url) => {
