@@ -45,18 +45,18 @@ const AdminTestimonials = () => {
       `testimonials/admin/${id}/approve/`
     );
 
-    setTestimonials((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? { ...t, is_approved: res.data.is_approved }
-          : t
+    setTestimonials((prevTestimonials) =>
+      prevTestimonials.map((testimonial) =>
+        testimonial.id === id
+          ? {
+              ...testimonial,
+              is_approved: true,
+            }
+          : testimonial
       )
     );
 
     toast.success(res.data.message);
-
-    // Refresh updated data
-    fetchTestimonials();
 
   } catch (err) {
     console.error(err);
