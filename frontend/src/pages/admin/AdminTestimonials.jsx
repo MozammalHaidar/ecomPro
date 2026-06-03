@@ -15,58 +15,30 @@ const AdminTestimonials = () => {
   }, []);
 
   const fetchTestimonials = async () => {
+    setLoading(true);  // 👈 show spinner on refresh too
     try {
       const res = await api.get('testimonials/admin/');
       setTestimonials(res.data.results || res.data);
     } catch (err) {
       console.error(err);
+      toast.error('Failed to fetch testimonials');
     } finally {
       setLoading(false);
     }
   };
 
-  // const handleApprove = async (id) => {
-  //   try {
-  //     const res = await api.patch(`testimonials/admin/${id}/approve/`);
-  //     setTestimonials((prev) =>
-  //       prev.map((t) =>
-  //         t.id === id ? { ...t, is_approved: res.data.is_approved } : t
-  //       )
-  //     );
-  //     toast.success(res.data.message);
-  //   } catch (err) {
-  //     toast.error('Failed to update testimonial');
-  //   }
-  // };
-  
- const handleApprove = async (id) => {
-  try {
-    const res = await api.patch(
-      `testimonials/admin/${id}/approve/`
-    );
-
-    setTestimonials((prevTestimonials) =>
-      prevTestimonials.map((testimonial) =>
-        testimonial.id === id
-          ? {
-              ...testimonial,
-              is_approved: true,
-            }
-          : testimonial
-      )
-    );
-
-    toast.success(res.data.message);
-
-  } catch (err) {
-    console.error(err);
-
-    toast.error(
-      err.response?.data?.error ||
-      'Failed to approve testimonial'
-    );
-  }
-};
+  const handleApprove = async (id) => {
+    try {
+      const res = await api.patch(`testimonials/admin/${id}/approve/`);
+      setTestimonials((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, is_approved: true } : t))
+      );
+      toast.success(res.data.message || 'Testimonial approved!');
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.error || 'Failed to approve testimonial');
+    }
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this testimonial?')) return;
@@ -78,6 +50,11 @@ const AdminTestimonials = () => {
       toast.error('Failed to delete testimonial');
     }
   };
+
+  // ✅ Derived counts — always in sync with state
+  const allCount = testimonials.length;
+  const pendingCount = testimonials.filter((t) => !t.is_approved).length;
+  const approvedCount = testimonials.filter((t) => t.is_approved).length;
 
   const filtered = testimonials.filter((t) => {
     if (filter === 'approved') return t.is_approved;
@@ -93,7 +70,7 @@ const AdminTestimonials = () => {
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Testimonials</h1>
           <p className="text-gray-500 text-sm mt-1">
-            {testimonials.filter(t => !t.is_approved).length} pending approval
+            {pendingCount} pending approval
           </p>
         </div>
         <button
@@ -107,9 +84,9 @@ const AdminTestimonials = () => {
       {/* Filter Tabs */}
       <div className="flex gap-2 mb-6 bg-white rounded-xl shadow-sm p-1.5 w-fit">
         {[
-          { key: 'all',      label: `All (${testimonials.length})` },
-          { key: 'pending',  label: `Pending (${testimonials.filter(t => !t.is_approved).length})` },
-          { key: 'approved', label: `Approved (${testimonials.filter(t => t.is_approved).length})` },
+          { key: 'all',      label: `All (${allCount})` },
+          { key: 'pending',  label: `Pending (${pendingCount})` },
+          { key: 'approved', label: `Approved (${approvedCount})` },
         ].map((tab) => (
           <button
             key={tab.key}
@@ -140,9 +117,7 @@ const AdminTestimonials = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               className={`bg-white rounded-2xl shadow-sm p-5 border-2 ${
-                t.is_approved
-                  ? 'border-green-100'
-                  : 'border-yellow-100'
+                t.is_approved ? 'border-green-100' : 'border-yellow-100'
               }`}
             >
               {/* Header */}
@@ -189,7 +164,7 @@ const AdminTestimonials = () => {
               {/* Date */}
               <p className="text-xs text-gray-400 mb-4">
                 {new Date(t.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric', month: 'long', day: 'numeric'
+                  year: 'numeric', month: 'long', day: 'numeric',
                 })}
               </p>
 
@@ -200,12 +175,12 @@ const AdminTestimonials = () => {
                   disabled={t.is_approved}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-medium transition ${
                     t.is_approved
-                      ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
                       : 'bg-green-50 text-green-600 hover:bg-green-100'
                   }`}
                 >
                   <FiCheck size={14} />
-                  {t.is_approved ? 'Approved' : 'Approve'}
+                  {t.is_approved ? '✓ Approved' : 'Approve'}
                 </button>
                 <button
                   onClick={() => handleDelete(t.id)}
