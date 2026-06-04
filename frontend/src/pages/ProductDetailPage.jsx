@@ -16,6 +16,9 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { getImageUrl } from '../utils/imageUrl';
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -40,6 +43,7 @@ const ProductDetailPage = () => {
       dispatch(addToCart(product));
     }
     toast.success(`${product.name} added to cart!`);
+    navigate("/checkout");
   };
 
   const handleWishlist = async () => {
@@ -233,6 +237,7 @@ const ProductDetailPage = () => {
               >
                 <FiShoppingCart size={20} />
                 {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+                
               </button>
 
               <button
