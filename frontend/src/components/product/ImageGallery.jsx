@@ -75,7 +75,7 @@ if (images && images.length > 0) {
             transition={{ duration: 0.2 }}
             src={currentImage?.image || '/placeholder.png'}
             alt={currentImage?.alt_text || productName}
-            className="w-full h-96 object-cover p-4 bg-gray-50"
+            className="w-full h-full object-cover p-4 bg-gray-50"
           />
         </AnimatePresence>
 
