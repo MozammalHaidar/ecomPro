@@ -7,6 +7,7 @@ from .views import (
     CancelOrderView,
     AdminStatsView,
     SalesChartView,
+    AdminDeleteOrderView,
 )
 
 urlpatterns = [

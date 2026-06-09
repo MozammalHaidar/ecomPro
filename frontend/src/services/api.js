@@ -7,6 +7,7 @@ const api = axios.create({
   },
 });
 
+await api.delete(`orders/${deleteTarget.id}/delete/`);
 // Attach access token to every request
 api.interceptors.request.use(
   (config) => {
