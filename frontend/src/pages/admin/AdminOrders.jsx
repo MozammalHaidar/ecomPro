@@ -55,7 +55,7 @@ const AdminOrders = () => {
     if (!deleteTarget) return;
     setDeleting(true);
     try {
-      await api.delete(`orders/${deleteTarget.id}/`);
+      await api.delete(`orders/${deleteTarget.id}/delete/`);
       setOrders((prev) => prev.filter((o) => o.id !== deleteTarget.id));
       toast.success(`Order #${deleteTarget.id} deleted`);
       setDeleteTarget(null);
