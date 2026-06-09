@@ -246,3 +246,7 @@ class SalesChartView(APIView):
             'top_products': top_products_data,
             'status_breakdown': status_breakdown,
         })
+
+class AdminDeleteOrderView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+    permission_classes = [IsAdminUser]
