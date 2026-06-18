@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchFeatured, fetchCategories } from '../store/slices/productSlice';
 import ProductCard from '../components/product/ProductCard';
@@ -59,7 +59,7 @@ const HomePage = () => {
                 Shop Now <FiArrowRight />
               </Link>
               <Link
-                to="/login"
+                to="/register"
                 className="border border-white text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-600 transition"
               >
                 Join Free
