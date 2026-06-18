@@ -59,7 +59,7 @@ const HomePage = () => {
                 Shop Now <FiArrowRight />
               </Link>
               <Link
-                to="/register"
+                to="/login"
                 className="border border-white text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-600 transition"
               >
                 Join Free
