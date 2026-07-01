@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Avatar from '../common/Avatar';
 
 
-
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

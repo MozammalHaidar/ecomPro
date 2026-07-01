@@ -62,8 +62,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 class WishlistView(generics.ListAPIView):
     serializer_class = WishlistSerializer
     permission_classes = [IsAuthenticated]

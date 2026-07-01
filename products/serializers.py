@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Product, Review, Wishlist, ProductImage
 
-
 class CategorySerializer(serializers.ModelSerializer):
     product_count = serializers.SerializerMethodField()
 
@@ -11,7 +10,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_product_count(self, obj):
         return obj.products.filter(is_active=True).count()
-
 
 class ReviewSerializer(serializers.ModelSerializer):
     user_email = serializers.SerializerMethodField()
@@ -49,8 +47,6 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_category_name(self, obj):
         return obj.category.name if obj.category else None
     
-
-
 
 class ProductListSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField()

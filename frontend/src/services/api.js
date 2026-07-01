@@ -7,7 +7,6 @@ const api = axios.create({
   },
 });
 
-
 // Attach access token to every request
 api.interceptors.request.use(
   (config) => {
