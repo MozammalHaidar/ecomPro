@@ -14,22 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.urls import path, include
-# from django.conf import settings
-# from django.conf.urls.static import static
 
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('api/accounts/', include('accounts.urls')),
-#     path('api/products/', include('products.urls')),
-#     path('api/orders/', include('orders.urls')),
-#     path('api/newsletter/', include('newsletter.urls')),
-#      path('api/coupons/', include('coupons.urls')),
-#      path('api/testimonials/', include('testimonials.urls')),
-# ]
 
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 from django.contrib import admin
 from django.urls import path, include
@@ -37,13 +23,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
 import cloudinary
-
-# def test_cloudinary(request):
-#     try:
-#         result = cloudinary.api.ping()
-#         return JsonResponse({'status': 'connected', 'result': result})
-#     except Exception as e:
-#         return JsonResponse({'status': 'error', 'message': str(e)})
 
 def test_cloudinary(request):
     try:
