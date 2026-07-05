@@ -168,7 +168,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://ecompro-1-klfc.onrender.com',
+    'https://ecompro-p1s0.onrender.com',
     'https://ecom-pro-psi.vercel.app',
     'http://localhost:5173',
 ]
